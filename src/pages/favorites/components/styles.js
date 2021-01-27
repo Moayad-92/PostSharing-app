@@ -59,4 +59,19 @@ const postcard_styles = StyleSheet.create({
   },
 });
 
-export {postcard_styles};
+const header_styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 5,
+    backgroundColor: Colors.lightblue,
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+});
+
+export {postcard_styles, header_styles};

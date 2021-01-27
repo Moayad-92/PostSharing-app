@@ -4,10 +4,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import auth from '@react-native-firebase/auth';
 import {SignIn, SignUp, Home, Favorites} from './pages';
+import Colors from './constants/Colors';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const hasSession = auth().currentUser;
 
 function TabNavigator() {
   return (
@@ -17,7 +20,7 @@ function TabNavigator() {
         tabBarLabel: () => null,
       })}
       tabBarOptions={{
-        activeTintColor: '#45cb7d',
+        activeTintColor: Colors.lightblue,
         inactiveTintColor: 'gray',
       }}>
       <Tab.Screen name="Home" component={Home} />
@@ -29,7 +32,9 @@ function TabNavigator() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        initialRouteName={hasSession ? 'TabNavigator' : 'SignIn'}
+        screenOptions={{headerShown: false}}>
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />

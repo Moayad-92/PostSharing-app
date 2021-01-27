@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "963303895462",
+    "project_id": "kod-one-app-grup14",
+    "storage_bucket": "kod-one-app-grup14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963303895462:android:d33d5fa2f6eea6085e1f67",
+        "android_client_info": {
+          "package_name": "com.week_5"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "963303895462-d4aq89dqic4vu7st1nepk3rmvfg3co36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDVTBZ8f9enMXMy_Iate0Y_2_sCTqix_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "963303895462-d4aq89dqic4vu7st1nepk3rmvfg3co36.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
