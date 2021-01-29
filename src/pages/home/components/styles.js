@@ -35,7 +35,7 @@ const postcard_styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     marginLeft: 10,
-    fontSize: 18,
+    fontSize: 15,
     backgroundColor: Colors.darkblue,
     paddingHorizontal: 17,
     paddingVertical: 8,
@@ -46,7 +46,7 @@ const postcard_styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     marginRight: 10,
-    fontSize: 16,
+    fontSize: 13,
   },
   content: {
     padding: 8,

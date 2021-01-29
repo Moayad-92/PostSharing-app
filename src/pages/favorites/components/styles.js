@@ -1,7 +1,7 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Colors from '../../../constants/Colors';
 
-const screen = Dimensions.get('window');
+
 
 const postcard_styles = StyleSheet.create({
   container: {
@@ -25,7 +25,6 @@ const postcard_styles = StyleSheet.create({
     padding: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    //backgroundColor: Colors.lighttomato,
   },
   body: {
     padding: 15,
@@ -35,7 +34,7 @@ const postcard_styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     marginLeft: 10,
-    fontSize: 18,
+    fontSize: 15,
     backgroundColor: Colors.darktomato,
     paddingHorizontal: 17,
     paddingVertical: 8,

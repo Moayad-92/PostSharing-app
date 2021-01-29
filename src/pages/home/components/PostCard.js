@@ -33,7 +33,7 @@ const PostCard = (props) => {
         <Icon
           name={isFaved ? 'heart' : 'heart-outline'}
           color="yellow"
-          size={30}
+          size={27}
           style={{marginRight: 10}}
           onPress={() => {
             if (!isFaved) {

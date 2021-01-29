@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, FlatList, Text, View, Alert} from 'react-native';
+import {SafeAreaView, FlatList, Text, View, Alert, Image} from 'react-native';
 import PostCard from './components/PostCard';
 import Header from './components/Header';
 import database from '@react-native-firebase/database';
@@ -34,7 +34,7 @@ export function Favorites({navigation}) {
         const server_data = snapshot.val();
 
         if (!server_data) {
-          return;
+          setData([]);
         }
 
         // Modifying coming data, to keep track of the key:value pairs
@@ -50,22 +50,21 @@ export function Favorites({navigation}) {
       });
   }, []);
 
-  // if (!data) {
-  //   return (
-  //     <>
-  //       <Text style={{fontSize: 20, alignSelf: 'center'}}>Loading...</Text>
-  //     </>
-  //   );
-  // }
-
-  // console.log('server_data' + data);
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header onClick={signOut} />
       {loading ? (
         <View style={{flex: 1, justifyContent: 'center'}}>
           <Text style={{fontSize: 20, alignSelf: 'center'}}>Loading...</Text>
+        </View>
+      ) : data.length == 0 ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Image
+            source={require('../../assets/inbox.png')}
+            resizeMode="contain"
+            style={{width: 150, margin: 0}}
+          />
+          <Text style={{fontSize: 20}}>No saved posts</Text>
         </View>
       ) : (
         <FlatList
