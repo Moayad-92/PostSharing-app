@@ -59,4 +59,31 @@ const postcard_styles = StyleSheet.create({
   },
 });
 
-export {postcard_styles};
+const sharepost_styles = StyleSheet.create({
+  container: {
+    width: screen.width * 0.95,
+    alignSelf: 'center',
+    backgroundColor: 'tomato',
+    borderRadius: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    position: 'absolute',
+    bottom: 8,
+    padding: 10,
+
+    shadowColor: 'rgba(67, 55, 55, 0.1)',
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowRadius: 3,
+    shadowOpacity: 1,
+    elevation: 7,
+  },
+  textInput: {
+    flex: 9,
+  },
+
+  sendIcon: {marginRight: 10, alignSelf: 'center', flex: 1},
+});
+export {postcard_styles, sharepost_styles};

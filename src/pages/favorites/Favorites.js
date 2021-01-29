@@ -1,42 +1,56 @@
-import React from 'react';
-import {SafeAreaView, FlatList, Alert} from 'react-native';
-import auth from '@react-native-firebase/auth';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, FlatList, Text} from 'react-native';
 import PostCard from './components/PostCard';
-import Header from './components/Header';
+import database from '@react-native-firebase/database';
 
-const data = [
-  {
-    id: 101,
-    author: 'johnwick',
-    time: '3 saat önce',
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  },
-  {
-    id: 102,
-    author: 'davidmick',
-    time: '4 saat önce',
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  },
-];
-export function Favorites({navigation}) {
-  function signOut() {
-    auth()
-      .signOut()
-      .then(() => {
-        navigation.navigate('SignIn');
-        Alert.alert('* Bilgi *', 'Cıkış yapıldı');
-      });
-  }
+export function Favorites() {
+  const userEmail = 'ahmedhibrahim01@gmail.com';
+  const [data, setData] = useState(null);
+
+  var tmpUserKey = userEmail
+    .split(/[ .:;@?!~,`"&|()<>{}\[\]\r\n/\\]+/)
+    .join('');
+
   const renderPost = ({item}) => <PostCard post={item} />;
+
+  // reading data from firebase.
+  useEffect(() => {
+    database()
+      .ref(`/users/${tmpUserKey}/favorites`)
+      .on('value', (snapshot) => {
+        const server_data = snapshot.val();
+
+        if (!server_data) {
+          return;
+        }
+
+        // Modifying coming data, to keep track of the key:value pairs
+        var modifiedArr = [];
+        snapshot.forEach(function (childSnapshot) {
+          var item = childSnapshot.val();
+          item.key = childSnapshot.key;
+          modifiedArr.push(item);
+        });
+
+        setData(modifiedArr);
+      });
+  }, []);
+
+  if (!data) {
+    return (
+      <>
+        <Text style={{fontSize: 20, alignSelf: 'center'}}>Loading...</Text>
+      </>
+    );
+  }
+
+  console.log('server_data' + data);
 
   return (
     <SafeAreaView>
       <FlatList
-        ListHeaderComponent={<Header onClick={signOut} />}
         data={data}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={renderPost}
       />
     </SafeAreaView>
