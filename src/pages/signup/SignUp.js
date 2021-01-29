@@ -15,15 +15,18 @@ export function SignUp({navigation}) {
         ? auth()
             .createUserWithEmailAndPassword(email, password)
             .then(() => {
-              Alert.alert('* Bilgi *', 'Hesabınız oluşturuldu');
+              Alert.alert('* Info *', 'Account successfully created');
               navigation.navigate('SignIn');
               setEmail('');
               setPassword('');
               setpasswordRepeat('');
             })
             .catch(({code, message}) => Alert.alert(code, message))
-        : Alert.alert('* Uyarı *', 'Şifreniz ve tekrarı aynı olmak zorundadır')
-      : Alert.alert('* Uyarı *', 'Lütfen tüm Alanları doldurunuz');
+        : Alert.alert(
+            '* Warning *',
+            'Your password and repeat password must match',
+          )
+      : Alert.alert('* Warning *', 'Please fill in all fields');
   }
 
   return (
@@ -35,26 +38,26 @@ export function SignUp({navigation}) {
         keyboardType="email-address"
         style={styles.input}
         value={email}
-        placeholder="E-posta adresinizi giriniz.."
+        placeholder="E-mail.."
         onChangeText={(value) => setEmail(value)}
       />
       <TextInput
         secureTextEntry={true}
         style={styles.input}
         value={password}
-        placeholder="Şifrenizi giriniz.."
+        placeholder="Password.."
         onChangeText={(value) => setPassword(value)}
       />
       <TextInput
         secureTextEntry={true}
         style={styles.input}
         value={passwordRepeat}
-        placeholder="Şifrenizi tekrar giriniz.."
+        placeholder="Repeat password.."
         onChangeText={(value) => setpasswordRepeat(value)}
       />
-      <CustomButton title="Kayıt Ol" styled={true} onClick={signUp} />
+      <CustomButton title="Register" styled={true} onClick={signUp} />
       <CustomButton
-        title="Vazgeç"
+        title="Cancel"
         styled={false}
         onClick={() => navigation.goBack()}
       />

@@ -1,11 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, FlatList, Text} from 'react-native';
+import {SafeAreaView, FlatList, Text, View, Alert} from 'react-native';
 import PostCard from './components/PostCard';
+import Header from './components/Header';
 import database from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
 
-export function Favorites() {
-  const userEmail = 'ahmedhibrahim01@gmail.com';
+export function Favorites({navigation}) {
+  const userEmail = auth().currentUser.email;
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  function signOut() {
+    auth()
+      .signOut()
+      .then(() => {
+        navigation.navigate('SignIn');
+        Alert.alert('* Info *', 'Signed Out');
+        console.log(auth().currentUser);
+      });
+  }
 
   var tmpUserKey = userEmail
     .split(/[ .:;@?!~,`"&|()<>{}\[\]\r\n/\\]+/)
@@ -33,26 +46,34 @@ export function Favorites() {
         });
 
         setData(modifiedArr);
+        setLoading(false);
       });
   }, []);
 
-  if (!data) {
-    return (
-      <>
-        <Text style={{fontSize: 20, alignSelf: 'center'}}>Loading...</Text>
-      </>
-    );
-  }
+  // if (!data) {
+  //   return (
+  //     <>
+  //       <Text style={{fontSize: 20, alignSelf: 'center'}}>Loading...</Text>
+  //     </>
+  //   );
+  // }
 
-  console.log('server_data' + data);
+  // console.log('server_data' + data);
 
   return (
-    <SafeAreaView>
-      <FlatList
-        data={data}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderPost}
-      />
+    <SafeAreaView style={{flex: 1}}>
+      <Header onClick={signOut} />
+      {loading ? (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Text style={{fontSize: 20, alignSelf: 'center'}}>Loading...</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderPost}
+        />
+      )}
     </SafeAreaView>
   );
 }

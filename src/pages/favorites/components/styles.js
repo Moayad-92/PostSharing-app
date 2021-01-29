@@ -64,13 +64,13 @@ const header_styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 5,
-    backgroundColor: Colors.lightblue,
+    padding: 8,
+    backgroundColor: 'tomato',
   },
   title: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'yellow',
   },
 });
 

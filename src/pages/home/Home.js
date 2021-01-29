@@ -1,7 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, Text, FlatList} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  FlatList,
+  ActivityIndicator,
+  View,
+} from 'react-native';
 import {PostCard, ShareNewPost} from './components';
 import database from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
 
 const data1 = [
   // {
@@ -28,7 +35,8 @@ const data1 = [
 ];
 export function Home() {
   const [data, setData] = useState(null);
-  const userEmail = 'ahmedhibrahim01@gmail.com';
+  const [loading, setLoading] = useState(true);
+  const userEmail = auth().currentUser.email;
 
   const favoritePost = (post) => {
     var tmpUserKey = userEmail
@@ -47,7 +55,7 @@ export function Home() {
 
       newPostReference
         .set({
-          author: 'ahmedhibrahim01@gmail.com',
+          author: userEmail,
           time: new Date().toString(),
           content: data,
         })
@@ -81,6 +89,7 @@ export function Home() {
 
         // Update data
         setData(modifiedArr);
+        setLoading(false);
       });
   }, []);
 
@@ -88,21 +97,27 @@ export function Home() {
     <PostCard post={item} onFavoritingPost={favoritePost} />
   );
 
-  if (!data) {
-    return (
-      <>
-        <Text style={{fontSize: 20, alignSelf: 'center'}}>Loading...</Text>
-      </>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <>
+  //       <Text style={{fontSize: 20, alignSelf: 'center'}}>Loading...</Text>
+  //     </>
+  //   );
+  // }
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <FlatList
-        data={data}
-        keyExtractor={(item, index) => item.author + item.time}
-        renderItem={renderPost}
-      />
+      {loading ? (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Text style={{fontSize: 20, alignSelf: 'center'}}>Loading...</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={(item, index) => item.author + item.time}
+          renderItem={renderPost}
+        />
+      )}
       <ShareNewPost
         placeholder="What fires in your brain?"
         onSharePost={(value) => sharePost(value)}

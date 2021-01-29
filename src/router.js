@@ -11,17 +11,19 @@ import Colors from './constants/Colors';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const hasSession = auth().currentUser;
+auth().onAuthStateChanged((user) => console.log(user));
 
 function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color}) => setIcon(focused, color, route),
-        tabBarLabel: () => null,
       })}
       tabBarOptions={{
-        activeTintColor: Colors.lightblue,
+        activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
+        initialRouteName: 'Home',
+        labelStyle: {fontWeight: 'bold', fontSize: 12, marginBottom: 3},
       }}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Favorites" component={Favorites} />
@@ -47,24 +49,16 @@ export default App;
 
 function setIcon(focused, color, route) {
   let iconName;
-  let label;
   switch (route.name) {
     case 'Home':
       iconName = focused ? 'home' : 'home-outline';
-      label = 'Gönderiler';
       break;
     case 'Favorites':
       iconName = focused ? 'heart' : 'heart-outline';
-      label = 'Kayıtlar';
       break;
 
     default:
       break;
   }
-  return (
-    <View style={{alignItems: 'center', marginBottom: 3}}>
-      <Icon name={iconName} color={color} size={30} />
-      <Text style={{color: color, fontWeight: 'bold'}}>{label}</Text>
-    </View>
-  );
+  return <Icon name={iconName} color={color} size={30} />;
 }

@@ -22,7 +22,7 @@ export function SignIn({navigation}) {
             setPassword('');
           })
           .catch(({code, message}) => Alert.alert(code, message))
-      : Alert.alert('* Uyarı *', 'Lütfen tüm Alanları doldurunuz');
+      : Alert.alert('* Warning *', 'Please fill in all fields');
   }
 
   return (
@@ -34,18 +34,18 @@ export function SignIn({navigation}) {
         keyboardType="email-address"
         style={styles.input}
         value={email}
-        placeholder="E-posta adresinizi giriniz.."
+        placeholder="E-mail.."
         onChangeText={(value) => setEmail(value)}
       />
       <TextInput
         secureTextEntry={true}
         style={styles.input}
         value={password}
-        placeholder="Şifrenizi giriniz.."
+        placeholder="Password.."
         onChangeText={(value) => setPassword(value)}
       />
-      <CustomButton title="Giriş Yap" styled={true} onClick={signIn} />
-      <CustomButton title="Kayıt Ol" styled={false} onClick={signUp} />
+      <CustomButton title="Sign IN" styled={true} onClick={signIn} />
+      <CustomButton title="Sign Up" styled={false} onClick={signUp} />
     </SafeAreaView>
   );
 }
